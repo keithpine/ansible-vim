@@ -2,7 +2,10 @@ function! s:isAnsible()
   let filepath = expand("%:p")
   let filename = expand("%:t")
   if filepath =~ '\v/(tasks|roles|handlers)/.*\.ya?ml$' | return 1 | en
-  if filepath =~ '\v/(group|host)_vars/' | return 1 | en
+  if filepath =~ '\v/(group|host)_vars/'
+    if filename != "" || return 0
+    return 1 | en
+  endif
   let s:ftdetect_filename_regex = '\v(playbook|site|main|local|requirements)\.ya?ml$'
   if exists("g:ansible_ftdetect_filename_regex")
     let s:ftdetect_filename_regex = g:ansible_ftdetect_filename_regex
